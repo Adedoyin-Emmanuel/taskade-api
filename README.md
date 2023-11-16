@@ -4,10 +4,11 @@ This is a simple nodejs, express boilerplate that comes with pretty much anythin
 
 ## Table of Contents 🧰
 
-- [Features](#Features)
-- [Installation](#installation)
-- [Contributing](#contributing)
-- [License](#license)
+- [Features](#features-🔦)
+- [Installation](#installation-💽)
+- [Contributing](#contributing-❤️)
+- [License](#license-🧐)
+- [Contributors](##contibutors-👨‍)
 
 ## Features 🔦
 
@@ -52,7 +53,7 @@ If you'd like to contribute to **nodejs-template**, please follow these steps:
 
 ## License 🧐
 
-**methane-cli** is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+**NodeJs-Template** is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Contibutors 👨‍
 
