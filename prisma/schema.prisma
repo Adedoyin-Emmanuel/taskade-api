@@ -12,3 +12,39 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
+model User{
+  id  String @id @default(uuid())
+  email String @unique
+  name String 
+  tasks Task[]
+  profile Profile?
+}
+
+
+model Task {
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title String
+  description String
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  status TaskStatus @default(pending)
+}
+
+
+model Profile{
+  id String @id @default(uuid())
+  bio String
+  user User @relation(fields: [userId], references: [id])
+  userId String @unique
+}
+
+
+enum TaskStatus {
+  pending
+  completed
+  inprogress
+}
