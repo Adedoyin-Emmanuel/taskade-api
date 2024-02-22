@@ -3,6 +3,8 @@ import { formatDateTime, toJavaScriptDate } from "./date";
 import response from "./response";
 import prisma from "./prisma";
 import { generateLongToken } from "./utils";
+import generateOTP from "./generateOtp";
+import { sendResetPasswordEmail } from "./sendEmail";
 
 export {
   connectToDb,
@@ -10,5 +12,7 @@ export {
   generateLongToken,
   response,
   toJavaScriptDate,
-  prisma
+  prisma,
+  generateOTP,
+  sendResetPasswordEmail,
 };
