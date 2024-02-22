@@ -9,7 +9,7 @@ import { useErrorHandler, useNotFound, useRateLimiter } from "./middlewares/";
 import { connectToDb } from "./utils";
 import http from "http";
 import { initSocket } from "./sockets/socket.server";
-import { helloRouter } from "./routes";
+import { helloRouter, userRouter } from "./routes";
 dotenv.config();
 
 const PORT = process.env.PORT || 2800;
@@ -46,6 +46,7 @@ app.use(useRateLimiter);
 //endpoints
 
 app.use("/api", helloRouter);
+app.use("/api/user", userRouter);
 
 app.use(useNotFound);
 app.use(useErrorHandler);

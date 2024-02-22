@@ -17,9 +17,13 @@ datasource db {
 model User{
   id  String @id @default(uuid())
   email String @unique
+  password String
   name String 
   tasks Task[]
   profile Profile?
+
+
+
 }
 
 
@@ -40,6 +44,7 @@ model Profile{
   bio String
   user User @relation(fields: [userId], references: [id])
   userId String @unique
+  profilePicture String
 }
 
 
