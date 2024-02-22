@@ -27,8 +27,10 @@ export default class UserController {
         },
       });
 
-      if (existingEmailUser)
+      if (existingEmailUser) {
         return response(res, 400, "A user with that email already exists");
+      }
+
       const user = await prisma.user.create({
         data: {
           name,
@@ -47,12 +49,21 @@ export default class UserController {
         },
       });
 
-      const { password, ...others } = user;
+      const { password, ...userWithoutPassword } = user;
 
-      return response(res, 201, "Account created successfully", others);
+      return response(
+        res,
+        201,
+        "Account created successfully",
+        userWithoutPassword
+      );
     } catch (error: any) {
       console.log(error);
-      return response(res, 400, error);
+      return response(
+        res,
+        400,
+        "An error occurred while creating a new account"
+      );
     }
   }
 
@@ -97,5 +108,71 @@ export default class UserController {
     });
 
     return response(res, 200, "Users fetched successfully", users);
+  }
+
+  static async updateUser(req: Request, res: Response) {
+    const requestSchema = Joi.object({
+      name: Joi.string().required(),
+      bio: Joi.string().required(),
+      email: Joi.string().email().optional(),
+    });
+
+    const { id } = req.params;
+    if (!id) return response(res, 400, "User id is required");
+
+    const { error, value } = requestSchema.validate(req.body);
+
+    if (error) return response(res, 400, error.details[0].message);
+
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!existingUser)
+      return response(res, 400, "User with given id not found", existingUser);
+    const { name, email, bio } = value;
+
+    if (email && email !== existingUser.email) {
+      const existingEmailUser = await prisma.user.findFirst({
+        where: {
+          email,
+        },
+      });
+
+      if (existingEmailUser) {
+        return response(res, 400, "A user with that email already exists");
+      }
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: id,
+      },
+
+      data: {
+        name,
+        email,
+        profile: {
+          update: {
+            bio,
+          },
+        },
+      },
+
+      select: {
+        profile: true,
+        email: true,
+        password: false,
+        name: true,
+        tasks: true,
+      },
+    });
+
+    if (!updatedUser)
+      return response(res, 400, "Could not update user details");
+
+    return response(res, 200, "User details updated successfully", updatedUser);
   }
 }

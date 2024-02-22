@@ -13,7 +13,7 @@
     "full-test": "eslint */[0-9]*.ts && jest --watchAll --verbose",
     "full-test-fix": "eslint */[0-9]*.ts --fix && jest --watchAll --verbose",
     "migrate": "bunx prisma migrate dev",
-    "run-studio": "bunx prisma studio"
+    "studio": "bunx prisma studio"
   },
   "proxy": true,
   "keywords": [],
