@@ -5,7 +5,7 @@ import { response, sendResetPasswordEmail, generateOTP } from "../utils";
 import { Request, Response } from "express";
 import dayjs from "dayjs";
 
-class AuthController {
+export default class AuthController {
   static async login(req: Request, res: Response) {
     const requestSchema = Joi.object({
       email: Joi.string().email().required(),
