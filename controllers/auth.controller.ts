@@ -1,9 +1,16 @@
 import { prisma } from "../utils";
 import Joi, { valid } from "joi";
 import bcrypt from "bcryptjs";
-import { response, sendResetPasswordEmail, generateOTP } from "../utils";
+import {
+  response,
+  sendResetPasswordEmail,
+  generateOTP,
+  generateAccessToken,
+} from "../utils";
 import { Request, Response } from "express";
 import dayjs from "dayjs";
+import jwt from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 
 export default class AuthController {
   static async login(req: Request, res: Response) {
@@ -29,6 +36,7 @@ export default class AuthController {
         email: true,
         name: true,
         tasks: true,
+        id: true,
       },
     });
 
@@ -47,7 +55,7 @@ export default class AuthController {
       return response(res, 400, "Invalid credentials");
     }
 
-    // generate accessToken
+    await generateAccessToken(res, user.id);
 
     return response(res, 200, "Login successful", user);
   }
@@ -93,6 +101,44 @@ export default class AuthController {
     });
 
     return response(res, 200, "OTP Sent to email");
+  }
+
+  static async refreshAccessToken(req: Request, res: Response) {
+    const refreshToken = req.cookies.refreshToken;
+    const JWT_SECRET = process.env.JWT_PRIVATE_KEY as string;
+
+    if (!refreshToken) return response(res, 401, "Invalid token");
+
+    const decoded = jwt.verify(refreshToken, JWT_SECRET) as jwt.JwtPayload;
+    if (!decoded) return response(res, 401, "Invalid or expired token");
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: decoded.id,
+      },
+    });
+
+    if (!user) return response(res, 401, "Invalid or expired token");
+
+    const accessToken = sign(
+      {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+      JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      expires: dayjs().add(15, "m").toDate(),
+      path: "/",
+    });
+
+    return response(res, 200, "Access token generated successfully");
   }
 
   static async resetPassword(req: Request, res: Response) {
