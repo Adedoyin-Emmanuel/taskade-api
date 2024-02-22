@@ -55,4 +55,47 @@ export default class UserController {
       return response(res, 400, error);
     }
   }
+
+  static async getUserById(req: Request, res: Response) {
+    const requestSchema = Joi.object({
+      id: Joi.string().required(),
+    });
+
+    const { error, value } = requestSchema.validate(req.params);
+    if (error) return response(res, 400, error.details[0].message);
+
+    const { id } = value;
+
+    const user = await prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+
+      select: {
+        password: false,
+        profile: true,
+        email: true,
+        name: true,
+        tasks: true,
+      },
+    });
+
+    if (!user) return response(res, 404, "User with given id not found");
+
+    return response(res, 200, "User fetched successfully", user);
+  }
+
+  static async getAllUsers(req: Request, res: Response) {
+    const users = await prisma.user.findMany({
+      select: {
+        password: false,
+        profile: true,
+        name: true,
+        email: true,
+        tasks: true,
+      },
+    });
+
+    return response(res, 200, "Users fetched successfully", users);
+  }
 }
