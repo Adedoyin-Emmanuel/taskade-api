@@ -52,5 +52,7 @@ app.use(useErrorHandler);
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  //connectToDb();
+  connectToDb().then(() => {
+    console.log("Connected to database successfully");
+  });
 });
