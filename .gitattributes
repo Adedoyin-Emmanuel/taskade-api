@@ -1,4 +1,3 @@
-*.dockerfile linguist-language=Dockerfile
+*.Dockerfile linguist-language=Dockerfile
 *.ts linguist-language=TypeScript
-*.tsx linguist-language=TypeScript
 *.sh linguist-language=Shell
