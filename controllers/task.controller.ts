@@ -51,6 +51,16 @@ export default class TaskController {
     return response(res, 200, "Tasks fetched successfully", allTasks);
   }
 
+  static async getCurrentUserTask(req: Request, res: Response) {
+    const userTasks = await prisma.task.findMany({
+      where: {
+        userId: req.user?.id as string,
+      },
+    });
+
+    return response(res, 200, "Tasks fetched successfully", userTasks);
+  }
+
   static async updateTask(req: Request, res: Response) {
     const requestSchema = Joi.object({
       title: Joi.string().optional().max(30),
