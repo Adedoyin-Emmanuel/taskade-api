@@ -10,7 +10,7 @@ Kudos to the **Prisma** team. Though I've used **Prisma** in the past to build a
 
 ## Resources 🥄
 
-As usual, I mean what else do I've? 😆. I used **Youtube** to learn. I watched several crash courses on **Prisma**. I will provide the links to the videos later. After learning, I studied a Senior developer codebase (Akinkunmi) and (Benaiah Alumona) to understand how it works and all in a production environment and a product used by a lot of users. I also studied **Prisma** docs to understand how it works and go beyond the **Youtube Videos** you absolutely need to read the docs.
+As usual, I mean what else do I've? 😆. I used **Youtube** to learn. I watched several crash courses on **Prisma**. I will provide the links to the videos later. After learning, I studied 2 Senior developers codebase (Akinkunmi) and (Benaiah Alumona) to understand how it works and all in a production environment and a product used by a lot of users. I also studied **Prisma** docs to understand how it works and go beyond the **Youtube Videos** you absolutely need to read the docs.
 
 - [Prisma Crash Course By Brad Traversy](https://www.youtube.com/watch?v=CYH04BJzamo&pp=ygUTcHJpc21hIGNyYXNoIGNvdXJzZQ%3D%3D)
 - [Learn Prisma In 60 Minutes By Web Dev Simplified](https://www.youtube.com/watch?v=RebA5J-rlwg&pp=ygUTcHJpc21hIGNyYXNoIGNvdXJzZQ%3D%3D)
