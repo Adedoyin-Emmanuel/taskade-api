@@ -10,6 +10,8 @@ import { connectToDb } from "./utils";
 import http from "http";
 import { initSocket } from "./sockets/socket.server";
 import { helloRouter, userRouter, authRouter } from "./routes";
+import "./types/types";
+
 dotenv.config();
 
 const PORT = process.env.PORT || 2800;

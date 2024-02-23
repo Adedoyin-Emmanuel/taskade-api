@@ -22,8 +22,7 @@ const useAuth = (req: any, res: any, next: NextFunction) => {
   }
 
   try {
-    // Extract the bearer token from the header
-    const JWT_SECRET: any = process.env.JWT_PRIVATE_KEY;
+    const JWT_SECRET = process.env.JWT_PRIVATE_KEY as string;
 
     if (!JWT_SECRET) {
       throw new Error("JWT private key is missing.");

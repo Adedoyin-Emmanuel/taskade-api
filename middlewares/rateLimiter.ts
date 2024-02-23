@@ -32,4 +32,10 @@ export const useVerifyLimiter = rateLimit({
   message: defaultMessage,
 });
 
+export const useForgotPasswordLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: config.get("App.forgot-password-request-limit"),
+  message: defaultMessage,
+});
+
 export default useRateLimiter;

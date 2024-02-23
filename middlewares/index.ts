@@ -1,9 +1,8 @@
 import useAuth from "./auth";
 import useErrorHandler from "./error";
 import useNotFound from "./notFound";
-import useRateLimiter, { useLoginRateLimiter, useCreateUserLimiter } from "./rateLimiter";
+import useRateLimiter, { useLoginRateLimiter, useCreateUserLimiter, useForgotPasswordLimiter } from "./rateLimiter";
 import { useLoginSlowDown } from "./rateSlowDown";
-import useCheckRole from "./checkRole";
 
 export {
   useErrorHandler,
@@ -12,6 +11,7 @@ export {
   useNotFound,
   useRateLimiter,
   useCreateUserLimiter,
+  useForgotPasswordLimiter,
   useAuth,
-  useCheckRole
+  
 };
