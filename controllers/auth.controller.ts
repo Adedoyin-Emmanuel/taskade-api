@@ -57,7 +57,9 @@ export default class AuthController {
 
     await generateAccessToken(res, user.id);
 
-    return response(res, 200, "Login successful", user);
+    const { password: hashedPasswordFromDb, ...userWithoutPassword } = user;
+
+    return response(res, 200, "Login successful", userWithoutPassword);
   }
   static async forgotPassword(req: Request, res: Response) {
     const requestSchema = Joi.object({
@@ -76,7 +78,7 @@ export default class AuthController {
       },
     });
 
-    if (!email)
+    if (!user)
       return response(
         res,
         404,

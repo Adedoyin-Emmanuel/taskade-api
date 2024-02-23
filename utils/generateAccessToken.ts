@@ -17,6 +17,7 @@ const generateAccessToken = async (res: Response, id: string) => {
         email: true,
         name: true,
         refreshToken: true,
+        id: true,
       },
     });
 
@@ -26,26 +27,17 @@ const generateAccessToken = async (res: Response, id: string) => {
       email: user?.email as string,
     };
 
-    const decodedJWT = jwt.verify(
-      user?.refreshToken as any,
-      PRIVATE_KEY
-    ) as JwtPayload;
-
-    if (!decodedJWT) return response(res, 401, "Token has expired");
-
     const accessToken = sign(payload, PRIVATE_KEY, { expiresIn: "15m" });
 
     const refreshToken =
       user?.refreshToken || sign(payload, PRIVATE_KEY, { expiresIn: "90d" });
 
-    if (!user?.refreshToken) {
-      await prisma.user.update({
-        where: { id },
-        data: {
-          refreshToken,
-        },
-      });
-    }
+    await prisma.user.update({
+      where: { id },
+      data: {
+        refreshToken,
+      },
+    });
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
