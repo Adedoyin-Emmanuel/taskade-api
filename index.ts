@@ -9,7 +9,7 @@ import { useErrorHandler, useNotFound, useRateLimiter } from "./middlewares/";
 import { connectToDb } from "./utils";
 import http from "http";
 import { initSocket } from "./sockets/socket.server";
-import { helloRouter, userRouter, authRouter } from "./routes";
+import { helloRouter, userRouter, authRouter, taskRouter } from "./routes";
 import "./types/types";
 
 dotenv.config();
@@ -50,6 +50,7 @@ app.use(useRateLimiter);
 app.use("/api", helloRouter);
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/task", taskRouter);
 
 app.use(useNotFound);
 app.use(useErrorHandler);
