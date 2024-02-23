@@ -28,9 +28,12 @@ const useAuth = (req: any, res: any, next: NextFunction) => {
       throw new Error("JWT private key is missing.");
     }
 
-    let decodeCookie: any = jwt.verify(tokenFromCookie, JWT_SECRET);
+    let decodeCookie = jwt.verify(
+      tokenFromCookie,
+      JWT_SECRET
+    ) as jwt.JwtPayload;
 
-    if (decodeCookie && decodeCookie._id) {
+    if (decodeCookie) {
       req.user = decodeCookie;
       next();
     } else {

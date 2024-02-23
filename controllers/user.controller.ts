@@ -181,8 +181,6 @@ export default class UserController {
 
     if (!id) return response(res, 400, "User is required");
 
-    console.log(id);
-
     const existingUser = await prisma.user.findFirst({
       where: {
         id,
@@ -194,25 +192,8 @@ export default class UserController {
       },
     });
 
-    console.log(existingUser);
     if (!existingUser)
       return response(res, 404, "User with given id not found");
-
-    if (existingUser.profile) {
-      await prisma.profile.delete({
-        where: {
-          userId: existingUser.id,
-        },
-      });
-    }
-
-    if (existingUser.tasks) {
-      await prisma.task.deleteMany({
-        where: {
-          userId: existingUser.id,
-        },
-      });
-    }
 
     await prisma.user.delete({
       where: {
