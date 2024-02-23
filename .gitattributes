@@ -1,4 +1,3 @@
 *Dockerfile linguist-language=Dockerfile
-*.dockerignore linguist-language=Dockerfile
 *.ts linguist-language=TypeScript
 *.sh linguist-language=Shell
